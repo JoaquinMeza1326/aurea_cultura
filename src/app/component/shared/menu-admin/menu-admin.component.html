@@ -1,0 +1,19 @@
+<header class="d-flex justify-content-between align-items-center px-4 py-3 header">
+  <div class="text-center flex-fill">
+    <h5 class="m-0 fw-bold aurea-title">AUREA CULTURA</h5>
+  </div>
+
+  <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">
+    <mat-icon class="fs-2">menu</mat-icon>
+  </button>
+
+  <mat-menu #menu="matMenu" class="custom-menu">
+    <button mat-menu-item>Mi Perfil</button>
+    <button mat-menu-item>Actualizar</button>
+    <button mat-menu-item>Mis favoritos</button>
+    <button mat-menu-item>Mis transacciones</button>
+    <button mat-menu-item>Mis Entradas</button>
+    <button mat-menu-item>Reportar</button>
+    <button mat-menu-item>Cerrar Sesión</button>
+  </mat-menu>
+</header>

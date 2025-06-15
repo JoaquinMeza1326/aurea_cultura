@@ -16,6 +16,13 @@ export const routes: Routes = [
       ).then((m) => m.RegistrarseComponent),
   },
   {
+    path: 'home',
+    loadComponent: () =>
+      import(
+        './component/gestion/inicio/inicio.component'
+      ).then((m) => m.InicioComponent),
+  },
+  {
     path: '**',
     redirectTo: 'login',
   },
