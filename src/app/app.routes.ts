@@ -18,9 +18,44 @@ export const routes: Routes = [
   {
     path: 'home',
     loadComponent: () =>
-      import(
-        './component/gestion/inicio/inicio.component'
-      ).then((m) => m.InicioComponent),
+      import('./component/cuenta/inicio/inicio.component').then(
+        (m) => m.InicioComponent
+      ),
+  },
+  {
+    path: 'events',
+    children: [
+      {
+        path: '',
+        redirectTo: 'list',
+        pathMatch: 'full',
+      },
+      {
+        path: 'list',
+        loadComponent: () =>
+          import(
+            './component/cuenta/evento-listar/evento-listar.component'
+          ).then((m) => m.EventoListarComponent),
+      },
+      {
+        path: 'detail',
+        loadComponent: () =>
+          import(
+            './component/cuenta/evento-detalle/evento-detalle.component'
+          ).then((m) => m.EventoDetalleComponent),
+      },
+      {
+        path: 'buy',
+        loadComponent: () =>
+          import(
+            './component/cuenta/evento-comprar/evento-comprar.component'
+          ).then((m) => m.EventoComprarComponent),
+      },
+      {
+        path: '**',
+        redirectTo: 'list',
+      },
+    ],
   },
   {
     path: '**',

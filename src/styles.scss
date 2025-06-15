@@ -38,3 +38,19 @@ $aurea_cultura-theme: mat.define-theme((
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.container-fluid{ min-height: 100vh;}
+
+.custom-dark-button {
+  background-color: #000 !important;
+  width: 160px;
+  color: #fff !important;
+  border-radius: 20px;
+  padding: 6px 16px;
+}
+.custom-dark-button:hover {
+  background-color: #333 !important;
+}
+
+.bg-home{
+    background-color: #f9f5ef;
+}
