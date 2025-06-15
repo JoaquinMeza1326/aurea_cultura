@@ -1,0 +1,40 @@
+<div class="container-fluid bg-home">
+  <app-menu-admin></app-menu-admin>
+  <div class="container py-5 d-flex justify-content-center">
+    <form style="max-width: 400px" class="w-100">
+      <!-- Nombre -->
+      <mat-form-field appearance="fill" class="w-100 mb-3">
+        <mat-label>Nombre</mat-label>
+        <input matInput type="text" />
+      </mat-form-field>
+
+      <!-- Edad -->
+      <mat-form-field appearance="fill" class="w-100 mb-3">
+        <mat-label>Edad</mat-label>
+        <input matInput type="number" />
+      </mat-form-field>
+
+      <!-- Correo -->
+      <mat-form-field appearance="fill" class="w-100 mb-3">
+        <mat-label>Correo</mat-label>
+        <input matInput type="email" />
+      </mat-form-field>
+
+      <!-- Teléfono -->
+      <mat-form-field appearance="fill" class="w-100 mb-4">
+        <mat-label>Teléfono</mat-label>
+        <input matInput type="tel" />
+      </mat-form-field>
+
+      <!-- Botones -->
+      <div class="d-flex gap-3 justify-content-end">
+        <button mat-flat-button class="btn custom-dark-button text-white px-4">
+          Guardar
+        </button>
+        <button mat-flat-button class="btn custom-dark-button text-white px-4">
+          Eliminar Cuenta
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
