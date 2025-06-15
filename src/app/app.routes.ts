@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 
+import { eventRoutes } from './routes/event.route';
+
 export const routes: Routes = [
   {
     path: 'login',
@@ -23,39 +25,36 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'transactions',
+    loadComponent: () =>
+      import('./component/cuenta/transacciones/transacciones.component').then(
+        (m) => m.TransaccionesComponent
+      ),
+  },
+  {
+    path: 'interests',
+    loadComponent: () =>
+      import('./component/cuenta/intereses/intereses.component').then(
+        (m) => m.InteresesComponent
+      ),
+  },
+  {
+    path: 'tickets',
+    loadComponent: () =>
+      import('./component/cuenta/entradas/entradas.component').then(
+        (m) => m.EntradasComponent
+      ),
+  },
+  {
+    path: 'report',
+    loadComponent: () =>
+      import('./component/cuenta/reporte/reporte.component').then(
+        (m) => m.ReporteComponent
+      ),
+  },
+  {
     path: 'events',
-    children: [
-      {
-        path: '',
-        redirectTo: 'list',
-        pathMatch: 'full',
-      },
-      {
-        path: 'list',
-        loadComponent: () =>
-          import(
-            './component/cuenta/evento-listar/evento-listar.component'
-          ).then((m) => m.EventoListarComponent),
-      },
-      {
-        path: 'detail',
-        loadComponent: () =>
-          import(
-            './component/cuenta/evento-detalle/evento-detalle.component'
-          ).then((m) => m.EventoDetalleComponent),
-      },
-      {
-        path: 'buy',
-        loadComponent: () =>
-          import(
-            './component/cuenta/evento-comprar/evento-comprar.component'
-          ).then((m) => m.EventoComprarComponent),
-      },
-      {
-        path: '**',
-        redirectTo: 'list',
-      },
-    ],
+    children: eventRoutes,
   },
   {
     path: '**',
