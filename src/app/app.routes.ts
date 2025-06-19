@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 
 import { eventRoutes } from './routes/event.route';
 import { userRoutes } from './routes/user.route';
+import { adminRoutes } from './routes/admin.route';
 
 export const routes: Routes = [
   {
@@ -52,6 +53,10 @@ export const routes: Routes = [
       import('./component/cuenta/reporte/reporte.component').then(
         (m) => m.ReporteComponent
       ),
+  },
+  {
+    path: 'admin',
+    children: adminRoutes,
   },
   {
     path: 'user',
