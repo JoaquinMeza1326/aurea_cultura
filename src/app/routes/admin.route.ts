@@ -43,4 +43,67 @@ export const adminRoutes: Routes = [
         (m) => m.EventEditComponent
       ),
   },
+  {
+    path: 'expositor-create',
+    loadComponent: () =>
+      import(
+        '../component/gestion/expositor-create/expositor-create.component'
+      ).then((m) => m.ExpositorCreateComponent),
+  },
+  {
+    path: 'expositor-edit/:id',
+    loadComponent: () =>
+      import(
+        '../component/gestion/expositor-edit/expositor-edit.component'
+      ).then((m) => m.ExpositorEditComponent),
+  },
+  {
+    path: 'expositor-list',
+    loadComponent: () =>
+      import(
+        '../component/gestion/expositor-list/expositor-list.component'
+      ).then((m) => m.ExpositorListComponent),
+  },
+  {
+    path: 'sponsor-create',
+    loadComponent: () =>
+      import(
+        '../component/gestion/sponsor-create/sponsor-create.component'
+      ).then((m) => m.SponsorCreateComponent),
+  },
+  {
+    path: 'sponsor-edit/:id',
+    loadComponent: () =>
+      import('../component/gestion/sponsor-edit/sponsor-edit.component').then(
+        (m) => m.SponsorEditComponent
+      ),
+  },
+  {
+    path: 'sponsor-list',
+    loadComponent: () =>
+      import('../component/gestion/sponsor-list/sponsor-list.component').then(
+        (m) => m.SponsorListComponent
+      ),
+  },
+  {
+    path: 'promotor-create',
+    loadComponent: () =>
+      import(
+        '../component/gestion/promotor-create/promotor-create.component'
+      ).then((m) => m.PromotorCreateComponent),
+  },
+  {
+    path: 'promotor-edit/:id',
+    loadComponent: () =>
+      import('../component/gestion/promotor-edit/promotor-edit.component').then(
+        (m) => m.PromotorEditComponent
+      ),
+  },
+  {
+    path: 'promotor-list',
+    loadComponent: () =>
+      import('../component/gestion/promotor-list/promotor-list.component').then(
+        (m) => m.PromotorListComponent
+      ),
+  },
 ];
