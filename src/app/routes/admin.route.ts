@@ -22,4 +22,25 @@ export const adminRoutes: Routes = [
         (m) => m.CityEditComponent
       ),
   },
+  {
+    path: 'event-list',
+    loadComponent: () =>
+      import('../component/gestion/event-list/event-list.component').then(
+        (m) => m.EventListComponent
+      ),
+  },
+  {
+    path: 'event-create',
+    loadComponent: () =>
+      import('../component/gestion/event-create/event-create.component').then(
+        (m) => m.EventCreateComponent
+      ),
+  },
+  {
+    path: 'event-edit/:id',
+    loadComponent: () =>
+      import('../component/gestion/event-edit/event-edit.component').then(
+        (m) => m.EventEditComponent
+      ),
+  },
 ];
