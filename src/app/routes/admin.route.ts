@@ -106,4 +106,25 @@ export const adminRoutes: Routes = [
         (m) => m.PromotorListComponent
       ),
   },
+  {
+    path: 'eventtype-create',
+    loadComponent: () =>
+      import(
+        '../component/gestion/eventtype-create/eventtype-create.component'
+      ).then((m) => m.EventtypeCreateComponent),
+  },
+  {
+    path: 'eventtype-edit/:id',
+    loadComponent: () =>
+      import(
+        '../component/gestion/eventtype-edit/eventtype-edit.component'
+      ).then((m) => m.EventtypeEditComponent),
+  },
+  {
+    path: 'eventtype-list',
+    loadComponent: () =>
+      import(
+        '../component/gestion/eventtype-list/eventtype-list.component'
+      ).then((m) => m.EventtypeListComponent),
+  },
 ];
