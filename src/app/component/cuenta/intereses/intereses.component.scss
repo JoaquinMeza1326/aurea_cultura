@@ -7,3 +7,11 @@
 .interes-btn:hover {
   background-color: #c98d26 !important;
 }
+
+.interes-btn.active{
+  background-color: #c98d26 !important;
+}
+
+.interes-btn.active:hover{
+  filter: brightness(90%);
+}

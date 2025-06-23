@@ -18,6 +18,8 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { TransactionsService } from '../../../services/transactions.service';
+import { PurchasedTicketService } from '../../../services/purchased-ticket.service';
+import { Transaction } from '../../../models/transaction';
 
 @Component({
   selector: 'app-evento-comprar',
@@ -54,6 +56,7 @@ export class EventoComprarComponent {
     public eventService: EventService,
     private ticketTypeService: TicketTypeService,
     private transactionService: TransactionsService,
+    private purchasedTicket: PurchasedTicketService,
     private route: ActivatedRoute,
     private snackbar: MatSnackBar,
     private fb: FormBuilder,
@@ -83,11 +86,8 @@ export class EventoComprarComponent {
 
   grabar() {
     this.transactionService.add(this.buyForm.getRawValue()).subscribe({
-      next: () => {
-        this.router.navigate(['/events/list']);
-        this.snackbar.open('Compra realizada', 'Cerrar', {
-          duration: 3000,
-        });
+      next: (data: Transaction) => {
+        this.savePurchasedTicket(data);
       },
       error: () => {
         this.snackbar.open('Error comprar ticket', 'Cerrar', {
@@ -95,6 +95,30 @@ export class EventoComprarComponent {
         });
       },
     });
+  }
+
+  savePurchasedTicket(data: Transaction) {
+    this.purchasedTicket
+      .add({
+        id: 0,
+        purchaseDate: data.date,
+        purchasePrice: Number(data.amount),
+        ticketType_id: this.event.ticketTypeId,
+        transaction_id: data.id,
+      })
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/events/list']);
+          this.snackbar.open('Compra realizada', 'Cerrar', {
+            duration: 3000,
+          });
+        },
+        error: () => {
+          this.snackbar.open('Error comprar ticket', 'Cerrar', {
+            duration: 3000,
+          });
+        },
+      });
   }
 
   updateAmount(): void {
@@ -123,9 +147,11 @@ export class EventoComprarComponent {
     const id = this.route.snapshot.paramMap.get('id') || 0;
     this.eventService.getById(Number(id)).subscribe({
       next: (data: EventMF) => {
-        const { price = 0, availableQuantity = 0 } = this.ticketTypes.find(
-          (x) => x.event.id == data.id
-        ) as TicketType;
+        const {
+          price = 0,
+          availableQuantity = 0,
+          id = 0,
+        } = this.ticketTypes.find((x) => x.event.id == data.id) as TicketType;
 
         this.event = {
           id: data.id,
@@ -135,6 +161,7 @@ export class EventoComprarComponent {
           startDate: data.startDate,
           price: price,
           image: data.image,
+          ticketTypeId: id,
         };
         this.availableQuantity = availableQuantity;
         this.setValuesValidationForm();
