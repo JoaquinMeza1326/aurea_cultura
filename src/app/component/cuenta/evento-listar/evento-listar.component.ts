@@ -1,8 +1,12 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MenuAdminComponent } from '../../shared/menu-admin/menu-admin.component';
 import { MatIcon } from '@angular/material/icon';
+import { EventService } from '../../../services/event.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { EventMF } from '../../../models/event';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-evento-listar',
@@ -12,36 +16,42 @@ import { MatIcon } from '@angular/material/icon';
   styleUrl: './evento-listar.component.scss',
 })
 export class EventoListarComponent {
-  eventos: Array<{ imagen: string; fecha: string; titulo: string }> = [
-    {
-      imagen: 'assets/images/eventos.png',
-      fecha: 'Marzo 28',
-      titulo: 'Sara Flores. Non Nete. Un sueño para una nación indígena',
-    },
-    {
-      imagen: 'assets/images/eventos.png',
-      fecha: 'Dic. 13',
-      titulo: 'Bruno Zeppilli. Transformaciones visuales',
-    },
-    {
-      imagen: 'assets/images/eventos.png',
-      fecha: 'Nov. 29',
-      titulo: 'Takahashi. Construir en madera en el Perú',
-    },
-    {
-      imagen: 'assets/images/eventos.png',
-      fecha: 'Marzo 28',
-      titulo: 'Sara Flores. Non Nete. Un sueño para una nación indígena',
-    },
-    {
-      imagen: 'assets/images/eventos.png',
-      fecha: 'Dic. 13',
-      titulo: 'Bruno Zeppilli. Transformaciones visuales',
-    },
-    {
-      imagen: 'assets/images/eventos.png',
-      fecha: 'Nov. 29',
-      titulo: 'Takahashi. Construir en madera en el Perú',
-    },
-  ];
+  eventos: Array<EventMF> = [];
+  visibleCount: number = 6;
+
+  constructor(
+    public eventService: EventService,
+    private snackbar: MatSnackBar,
+    private location: Location,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.getEvents();
+  }
+
+  viewMore() {
+    this.visibleCount += 3;
+  }
+
+  back() {
+    this.router.navigate(['/home']);
+  }
+
+  buy(id: number) {
+    this.router.navigate(['events/detail', id]);
+  }
+
+  getEvents() {
+    this.eventService.getEventos().subscribe({
+      next: (data: EventMF[]) => {
+        this.eventos = data;
+      },
+      error: () => {
+        this.snackbar.open('Error al cargar los eventos', 'Cerrar', {
+          duration: 3000,
+        });
+      },
+    });
+  }
 }

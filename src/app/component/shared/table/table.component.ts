@@ -36,6 +36,8 @@ export class TableComponent<T extends Record<string, any>> {
   @Input() data: T[] = [];
   @Input() columns: { field: string; header: string }[] = [];
   @Input() showActions: boolean = true;
+  @Input() showSearch: boolean = true;
+  @Input() showPaginate: boolean = true;
 
   @Output() editEventHandler = new EventEmitter<number>();
   @Output() deleteEventHandler = new EventEmitter<number>();

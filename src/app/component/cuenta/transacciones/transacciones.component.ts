@@ -1,25 +1,49 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTableModule } from '@angular/material/table';
 import { MenuAdminComponent } from '../../shared/menu-admin/menu-admin.component';
+import { TableComponent } from '../../shared/table/table.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from '../../../services/auth.service';
+import { Transaction } from '../../../models/transaction';
+import { TransactionsService } from '../../../services/transactions.service';
 
 @Component({
   selector: 'app-transacciones',
   standalone: true,
-  imports: [MatTableModule, MatButtonModule, CommonModule, MenuAdminComponent],
+  imports: [MenuAdminComponent, TableComponent, MatIconModule],
   templateUrl: './transacciones.component.html',
   styleUrl: './transacciones.component.scss',
 })
 export class TransaccionesComponent {
-  entradas = [
-    {
-      Codigo: 'AECLT20432',
-      Fecha: '12/06/2025',
-      Monto: 100,
-      Cantidad: 25,
-    },
+  constructor(
+    private transactionService: TransactionsService,
+    private snackbar: MatSnackBar,
+    private authService: AuthService
+  ) {}
+  transactions: Array<Transaction> = [];
+  clientId: number = 0;
+  columns: { field: string; header: string }[] = [
+    { field: 'id', header: 'Id' },
+    { field: 'date', header: 'Fecha' },
+    { field: 'amount', header: 'Monto' },
+    { field: 'quantity', header: 'Cantidad' },
   ];
 
-  displayedColumns = ['Codigo', 'Fecha', 'Monto', 'Cantidad'];
+  ngOnInit(): void {
+    this.clientId = this.authService.getIdUser();
+    this.getTransactions();
+  }
+
+  getTransactions() {
+    this.transactionService.getTransactionsByClient(this.clientId).subscribe({
+      next: (data: Transaction[]) => {
+        this.transactions = data;
+      },
+      error: () => {
+        this.snackbar.open('Error al cargar las ciudades', 'Cerrar', {
+          duration: 3000,
+        });
+      },
+    });
+  }
 }

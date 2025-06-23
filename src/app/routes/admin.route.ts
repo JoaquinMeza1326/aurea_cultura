@@ -127,4 +127,25 @@ export const adminRoutes: Routes = [
         '../component/gestion/eventtype-list/eventtype-list.component'
       ).then((m) => m.EventtypeListComponent),
   },
+  {
+    path: 'tickettype-create',
+    loadComponent: () =>
+      import(
+        '../component/gestion/tickettype-create/tickettype-create.component'
+      ).then((m) => m.TickettypeCreateComponent),
+  },
+  {
+    path: 'tickettype-edit/:id',
+    loadComponent: () =>
+      import(
+        '../component/gestion/tickettype-edit/tickettype-edit.component'
+      ).then((m) => m.TickettypeEditComponent),
+  },
+  {
+    path: 'tickettype-list',
+    loadComponent: () =>
+      import(
+        '../component/gestion/tickettype-list/tickettype-list.component'
+      ).then((m) => m.TickettypeListComponent),
+  },
 ];

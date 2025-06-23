@@ -14,14 +14,14 @@ export const eventRoutes: Routes = [
       ),
   },
   {
-    path: 'detail',
+    path: 'detail/:id',
     loadComponent: () =>
       import(
         '../component/cuenta/evento-detalle/evento-detalle.component'
       ).then((m) => m.EventoDetalleComponent),
   },
   {
-    path: 'buy',
+    path: 'buy/:id',
     loadComponent: () =>
       import(
         '../component/cuenta/evento-comprar/evento-comprar.component'

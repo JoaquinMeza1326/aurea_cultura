@@ -20,3 +20,13 @@ export interface EventMF {
   sponsor?: Sponsor;
   expositor?: Expositor;
 }
+
+export interface EventDto {
+  id: number;
+  name: string;
+  price: number;
+  startDate: string;
+  image: string;
+  endDate: string;
+  descripcion: string;
+}

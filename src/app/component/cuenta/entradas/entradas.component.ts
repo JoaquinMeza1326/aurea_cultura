@@ -1,24 +1,50 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTableModule } from '@angular/material/table';
 import { MenuAdminComponent } from '../../shared/menu-admin/menu-admin.component';
+import { TableComponent } from '../../shared/table/table.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from '../../../services/auth.service';
+import { PurchasedTicketService } from '../../../services/purchased-ticket.service';
+import { PurcharsedTicket } from '../../../models/purchasedTicket';
 
 @Component({
   selector: 'app-entradas',
   standalone: true,
-  imports: [MatTableModule, MatButtonModule, CommonModule, MenuAdminComponent],
+  imports: [MenuAdminComponent, TableComponent, MatIconModule],
   templateUrl: './entradas.component.html',
   styleUrl: './entradas.component.scss',
 })
 export class EntradasComponent {
-  entradas = [
-    {
-      Codigo: 'AECLT20432',
-      PrecioCompra: 'Nomnbre',
-      Fecha: '12/06/2025',
-    },
+  constructor(
+    private purchasedTicketService: PurchasedTicketService,
+    private snackbar: MatSnackBar,
+    private authService: AuthService
+  ) {}
+  tickets: Array<PurcharsedTicket> = [];
+  clientId: number = 0;
+  columns: { field: string; header: string }[] = [
+    { field: 'id', header: 'Id' },
+    { field: 'purchasePrice', header: 'Precio de Compra' },
+    { field: 'purchaseDate', header: 'Fecha' },
   ];
 
-  displayedColumns = ['Codigo', 'PrecioCompra', 'Fecha'];
+  ngOnInit(): void {
+    this.clientId = this.authService.getIdUser();
+    this.getPurchasedTickets();
+  }
+
+  getPurchasedTickets() {
+    this.purchasedTicketService
+      .getPurchasedTicketsByClient(this.clientId)
+      .subscribe({
+        next: (data: PurcharsedTicket[]) => {
+          this.tickets = data;
+        },
+        error: () => {
+          this.snackbar.open('Error al cargar las ciudades', 'Cerrar', {
+            duration: 3000,
+          });
+        },
+      });
+  }
 }
