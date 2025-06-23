@@ -29,4 +29,5 @@ export interface EventDto {
   image: string;
   endDate: string;
   descripcion: string;
+  ticketTypeId?: number;
 }

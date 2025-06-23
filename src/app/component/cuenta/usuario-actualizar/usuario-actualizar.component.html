@@ -28,11 +28,16 @@
 
       <!-- Botones -->
       <div class="d-flex gap-3 justify-content-end">
-        <button mat-flat-button class="btn custom-dark-button text-white px-4">
-          Guardar
+        <button
+          mat-flat-button
+          type="button"
+          class="btn custom-dark-button text-white px-4"
+          (click)="cancel()"
+        >
+          Cancelar
         </button>
         <button mat-flat-button class="btn custom-dark-button text-white px-4">
-          Eliminar Cuenta
+          Guardar
         </button>
       </div>
     </form>
