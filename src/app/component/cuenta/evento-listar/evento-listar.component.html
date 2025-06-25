@@ -46,7 +46,6 @@
                   (selectionChange)="selectFilter($event.value, 'city')"
                 >
                   <mat-option [value]="0">Todos</mat-option>
-                  <mat-option [value]="0">Todos</mat-option>
                   <mat-option *ngFor="let city of cities" [value]="city.id">
                     {{ city.name }}
                   </mat-option>
@@ -67,6 +66,22 @@
                     [value]="sponsor.id"
                   >
                     {{ sponsor.nombreSponsor }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4">
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Expositor</mat-label>
+                <mat-select
+                  (selectionChange)="selectFilter($event.value, 'expositor')"
+                >
+                  <mat-option [value]="0">Todos</mat-option>
+                  <mat-option
+                    *ngFor="let expositor of expositors"
+                    [value]="expositor.id"
+                  >
+                    {{ expositor.nameExpositor }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>

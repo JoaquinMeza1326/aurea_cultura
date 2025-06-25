@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 import { FavoriteService } from '../../../services/favorite.service';
 import { AuthService } from '../../../services/auth.service';
 import { Favorite } from '../../../models/favorite';
+import { Expositor } from '../../../models/expositor';
 type FilterKey = keyof EventMF;
 
 @Component({
@@ -45,12 +46,14 @@ export class EventoListarComponent {
     promoter: 0,
     city: 0,
     sponsor: 0,
+    expositor: 0,
   };
 
   eventTypes: EventType[] = [];
   promotors: Promoter[] = [];
   cities: City[] = [];
   sponsors: Sponsor[] = [];
+  expositors: Expositor[] = [];
   favorites: Favorite[] = [];
 
   constructor(
@@ -180,13 +183,23 @@ export class EventoListarComponent {
         );
       })
     );
-    console.log(this.eventsFiltereds);
   }
 
   setFilters(events: EventMF[]) {
-    this.eventTypes = events.map((x) => x.eventType!);
-    this.promotors = events.map((x) => x.promoter!);
-    this.cities = events.map((x) => x.city!);
-    this.sponsors = events.map((x) => x.sponsor!);
+    this.eventTypes = this.removeRepeats(events.map((x) => x.eventType));
+    this.promotors = this.removeRepeats(events.map((x) => x.promoter));
+    this.cities = this.removeRepeats(events.map((x) => x.city));
+    this.sponsors = this.removeRepeats(events.map((x) => x.sponsor));
+    this.expositors = this.removeRepeats(events.map((x) => x.expositor));
+
+    // this.promotors = events.map((x) => x.promoter!);
+    // this.cities = events.map((x) => x.city!);
+    // this.sponsors = events.map((x) => x.sponsor!);
+  }
+
+  removeRepeats(array: Array<any>) {
+    return array.filter(
+      (obj, index, self) => index === self.findIndex((t) => t.id === obj.id)
+    );
   }
 }
