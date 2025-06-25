@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
 import { Token } from '../models/token';
-import { User } from '../models/user';
+import { User, UserDto } from '../models/user';
 import { Authority } from '../models/authority';
 
 @Injectable({

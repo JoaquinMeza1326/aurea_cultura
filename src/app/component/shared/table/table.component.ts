@@ -38,6 +38,7 @@ export class TableComponent<T extends Record<string, any>> {
   @Input() showActions: boolean = true;
   @Input() showSearch: boolean = true;
   @Input() showPaginate: boolean = true;
+  @Input() showSelect: boolean = false;
 
   @Output() editEventHandler = new EventEmitter<number>();
   @Output() deleteEventHandler = new EventEmitter<number>();
@@ -56,6 +57,11 @@ export class TableComponent<T extends Record<string, any>> {
     if (this.showActions && !this.displayedColumns.includes('acciones')) {
       this.displayedColumns.push('acciones');
     }
+
+    if (this.showSelect && !this.displayedColumns.includes('select')) {
+      this.displayedColumns.push('select');
+    }
+
 
     if (this.paginator) this.dataSource.paginator = this.paginator;
     if (this.sort) this.dataSource.sort = this.sort;

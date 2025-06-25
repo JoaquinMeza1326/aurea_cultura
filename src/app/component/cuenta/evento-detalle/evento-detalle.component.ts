@@ -9,7 +9,7 @@ import { EventDto, EventMF } from '../../../models/event';
 import { TableComponent } from '../../shared/table/table.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TicketTypeService } from '../../../services/ticket-type.service';
-import { TicketType } from '../../../models/ticketType';
+import { TicketType, TicketTypeDto } from '../../../models/ticketType';
 
 @Component({
   selector: 'app-evento-detalle',
@@ -31,7 +31,6 @@ export class EventoDetalleComponent {
     { field: 'startDate', header: 'Fecha Inicio' },
     { field: 'endDate', header: 'Fecha Fin' },
   ];
-  tickets: EventDto[] = [];
   ticket: EventDto = {
     descripcion: '',
     endDate: '',
@@ -41,7 +40,7 @@ export class EventoDetalleComponent {
     price: 0,
     startDate: '',
   };
-  ticketTypes: TicketType[] = [];
+  ticketTypes: TicketTypeDto[] = [];
 
   constructor(
     public eventService: EventService,
@@ -52,18 +51,22 @@ export class EventoDetalleComponent {
   ) {}
 
   ngOnInit(): void {
-    this.getTicketInfo();
-  }
-
-  buy() {
-    this.router.navigate(['/events/buy', this.ticket.id]);
+    this.getById();
   }
 
   getTicketInfo() {
     this.ticketTypeService.getTicketTypes().subscribe({
       next: (data: TicketType[]) => {
-        this.ticketTypes = data;
-        this.getById();
+        this.ticketTypes = data.map((x) => {
+          return {
+            id: x.id,
+            availableQuantity: x.availableQuantity,
+            endDate: this.ticket.endDate,
+            name: x.name,
+            price: x.price,
+            startDate: this.ticket.startDate,
+          };
+        });
       },
       error: () => {
         this.snackbar.open('Error al cargar los tipos de evento', 'Cerrar', {
@@ -71,6 +74,10 @@ export class EventoDetalleComponent {
         });
       },
     });
+  }
+
+  select(id: number) {
+    this.router.navigate(['/events/buy', this.ticket.id, id]);
   }
 
   cancel() {
@@ -81,21 +88,16 @@ export class EventoDetalleComponent {
     const id = this.route.snapshot.paramMap.get('id') || 0;
     this.eventService.getById(Number(id)).subscribe({
       next: (data: EventMF) => {
-        const { price = 0 } = this.ticketTypes.find(
-          (x) => x.event.id == data.id
-        ) as TicketType;
-
         this.ticket = {
           id: data.id,
           name: data.nombre,
           endDate: data.endDate,
           startDate: data.startDate,
-          price: price,
           descripcion: data.descripcion,
           image: data.image,
         };
 
-        this.tickets = [...this.tickets, this.ticket];
+        this.getTicketInfo();
       },
       error: () => {
         this.router.navigate(['events/list']);

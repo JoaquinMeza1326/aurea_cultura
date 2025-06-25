@@ -148,4 +148,8 @@ export const adminRoutes: Routes = [
         '../component/gestion/tickettype-list/tickettype-list.component'
       ).then((m) => m.TickettypeListComponent),
   },
+  {
+    path: '**',
+    redirectTo: 'login',
+  },
 ];

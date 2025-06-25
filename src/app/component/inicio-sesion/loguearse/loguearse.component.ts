@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { UserService } from '../../../services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../../../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { User } from '../../../models/user';
 import { FormsModule } from '@angular/forms';
 
@@ -19,6 +19,7 @@ import { FormsModule } from '@angular/forms';
     MatFormFieldModule,
     MatButtonModule,
     FormsModule,
+    RouterLink,
   ],
   templateUrl: './loguearse.component.html',
   styleUrl: './loguearse.component.scss',

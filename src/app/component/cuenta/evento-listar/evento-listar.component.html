@@ -8,14 +8,88 @@
       </button>
       <div class="d-flex flex-wrap align-items-center gap-2">
         <span class="fw-semibold me-2">Filtros:</span>
-        <button
+        <!-- <button
           mat-button
           color="primary"
           class="btn filter-button btn-sm rounded-pill text-white"
         >
           Tipo
-        </button>
-        <button
+        </button> -->
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-md-4">
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Tipo</mat-label>
+                <mat-select
+                  (selectionChange)="selectFilter($event.value, 'eventType')"
+                >
+                  <mat-option [value]="0">Todos</mat-option>
+                  <mat-option *ngFor="let type of eventTypes" [value]="type.id">
+                    {{ type.eventName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4">
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Promotor</mat-label>
+                <mat-select
+                  (selectionChange)="selectFilter($event.value, 'promoter')"
+                >
+                  <mat-option [value]="0">Todos</mat-option>
+                  <mat-option
+                    *ngFor="let promoter of promotors"
+                    [value]="promoter.id"
+                  >
+                    {{ promoter.details }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4">
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Ciudad</mat-label>
+                <mat-select
+                  (selectionChange)="selectFilter($event.value, 'city')"
+                >
+                  <mat-option [value]="0">Todos</mat-option>
+                  <mat-option [value]="0">Todos</mat-option>
+                  <mat-option *ngFor="let city of cities" [value]="city.id">
+                    {{ city.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-4">
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Sponsor</mat-label>
+                <mat-select
+                  (selectionChange)="selectFilter($event.value, 'sponsor')"
+                >
+                  <mat-option [value]="0">Todos</mat-option>
+                  <mat-option
+                    *ngFor="let sponsor of sponsors"
+                    [value]="sponsor.id"
+                  >
+                    {{ sponsor.nombreSponsor }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-4">
+              <button
+                mat-button
+                class="btn custom-dark-button"
+                (click)="filterEvents()"
+              >
+                Filtrar
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- <button
           mat-button
           color="primary"
           class="btn filter-button btn-sm rounded-pill text-white"
@@ -42,7 +116,7 @@
           class="btn filter-button btn-sm rounded-pill text-white"
         >
           Todo
-        </button>
+        </button> -->
       </div>
     </div>
 
@@ -50,7 +124,7 @@
     <div class="row g-4">
       <div
         class="col-md-4"
-        *ngFor="let evento of eventos.slice(0, visibleCount)"
+        *ngFor="let evento of eventsFiltereds.slice(0, visibleCount)"
       >
         <div
           class="border rounded-3 h-100 d-flex flex-column overflow-hidden shadow-sm"

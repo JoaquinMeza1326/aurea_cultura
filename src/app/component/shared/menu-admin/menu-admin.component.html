@@ -23,12 +23,13 @@
       >Tipos de tickets</a
     >
     } @else {
-    <a [routerLink]="['/user/update']" mat-menu-item>Actualizar datos</a>
     <a [routerLink]="['/home']" mat-menu-item>Inicio</a>
+    <a [routerLink]="['/user/update']" mat-menu-item>Actualizar datos</a>
     <a [routerLink]="['/tickets']" mat-menu-item>Mis Entradas</a>
     <a [routerLink]="['/transactions']" mat-menu-item>Mis Transacciones</a>
     <a [routerLink]="['/events/favorites']" mat-menu-item>Eventos favoritos</a>
     <a [routerLink]="['/events/list']" mat-menu-item>Eventos</a>
+    <a [routerLink]="['/report']" mat-menu-item>Reclamo</a>
     }
     <a mat-menu-item (click)="logOut()">Cerrar Sesión</a>
   </mat-menu>

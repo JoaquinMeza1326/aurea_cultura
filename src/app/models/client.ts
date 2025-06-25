@@ -6,4 +6,5 @@ export interface Client {
   age: number;
   phone: string;
   dni: string;
+  user_id: string;
 }

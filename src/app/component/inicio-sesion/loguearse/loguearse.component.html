@@ -29,12 +29,6 @@
             />
           </mat-form-field>
 
-          <div class="mb-3 text-start">
-            <a href="#" class="text-decoration-none text-dark"
-              >¿Olvidaste tu contraseña?</a
-            >
-          </div>
-
           <button
             mat-raised-button
             color="primary"
@@ -44,9 +38,13 @@
             INICIAR
           </button>
 
-          <button mat-raised-button class="w-100 bg-login-btn">
+          <a
+            [routerLink]="['/register']"
+            mat-raised-button
+            class="w-100 bg-login-btn"
+          >
             REGÍSTRATE
-          </button>
+          </a>
         </div>
       </div>
     </div>

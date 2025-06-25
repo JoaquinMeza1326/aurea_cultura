@@ -46,7 +46,7 @@ export class EventoComprarComponent {
     price: 0,
     startDate: '',
   };
-  ticketTypes: TicketType[] = [];
+  ticketType!: TicketType;
   availableQuantity: number = 0;
 
   buyForm!: FormGroup;
@@ -130,9 +130,10 @@ export class EventoComprarComponent {
   }
 
   getTicketInfo() {
-    this.ticketTypeService.getTicketTypes().subscribe({
-      next: (data: TicketType[]) => {
-        this.ticketTypes = data;
+    const idType = this.route.snapshot.paramMap.get('idType') || 0;
+    this.ticketTypeService.getById(Number(idType)).subscribe({
+      next: (data: TicketType) => {
+        this.ticketType = data;
         this.getEventById();
       },
       error: () => {
@@ -147,23 +148,17 @@ export class EventoComprarComponent {
     const id = this.route.snapshot.paramMap.get('id') || 0;
     this.eventService.getById(Number(id)).subscribe({
       next: (data: EventMF) => {
-        const {
-          price = 0,
-          availableQuantity = 0,
-          id = 0,
-        } = this.ticketTypes.find((x) => x.event.id == data.id) as TicketType;
-
         this.event = {
           id: data.id,
           descripcion: data.descripcion,
           endDate: data.endDate,
           name: data.nombre,
           startDate: data.startDate,
-          price: price,
+          price: this.ticketType.price,
           image: data.image,
-          ticketTypeId: id,
+          ticketTypeId: this.ticketType.id,
         };
-        this.availableQuantity = availableQuantity;
+        this.availableQuantity = this.ticketType.availableQuantity;
         this.setValuesValidationForm();
       },
       error: () => {

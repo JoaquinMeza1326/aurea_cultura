@@ -21,7 +21,7 @@ export const eventRoutes: Routes = [
       ).then((m) => m.EventoDetalleComponent),
   },
   {
-    path: 'buy/:id',
+    path: 'buy/:id/:idType',
     loadComponent: () =>
       import(
         '../component/cuenta/evento-comprar/evento-comprar.component'

@@ -8,3 +8,12 @@ export interface TicketType {
   event: EventMF;
   event_id?: number;
 }
+
+export interface TicketTypeDto {
+  id: number;
+  name: string;
+  price: number;
+  availableQuantity: number;
+  startDate: string;
+  endDate: string;
+}

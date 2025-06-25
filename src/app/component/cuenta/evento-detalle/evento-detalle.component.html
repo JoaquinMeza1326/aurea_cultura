@@ -31,10 +31,12 @@
     <div class="col-12 col-md-8 mx-auto">
       <app-table
         [columns]="columns"
-        [data]="tickets"
+        [data]="ticketTypes"
         [showActions]="false"
         [showSearch]="false"
         [showPaginate]="false"
+        [showSelect]="true"
+        (editEventHandler)="select($event)"
       ></app-table>
 
       <div class="d-flex justify-content-end gap-3">
@@ -47,14 +49,14 @@
         >
           Cancelar
         </button>
-        <button
+        <!-- <button
           mat-raised-button
           color="primary"
           class="custom-dark-button text-white px-4"
           (click)="buy()"
         >
           Seleccionar
-        </button>
+        </button> -->
       </div>
     </div>
   </div>

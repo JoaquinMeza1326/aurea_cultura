@@ -97,23 +97,25 @@ export class TickettypeEditComponent {
   }
 
   grabar() {
-    this.ticketTypeService.add(this.ticketTypeForm.value).subscribe({
-      next: () => {
-        this.router.navigate(['/admin/tickettype-list']);
-        this.snackbar.open('Tipo de ticket registrado correctamente', 'OK', {
-          duration: 3000,
-        });
-      },
-      error: () => {
-        this.snackbar.open(
-          'Ocurrió un error al registrar el tipo de ticket',
-          'OK',
-          {
+    this.ticketTypeService
+      .update(this.id, this.ticketTypeForm.value)
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/admin/tickettype-list']);
+          this.snackbar.open('Tipo de ticket actualizado correctamente', 'OK', {
             duration: 3000,
-          }
-        );
-      },
-    });
+          });
+        },
+        error: () => {
+          this.snackbar.open(
+            'Ocurrió un error al actualizar el tipo de ticket',
+            'OK',
+            {
+              duration: 3000,
+            }
+          );
+        },
+      });
   }
   cancelar() {
     this.router.navigate(['/admin/tickettype-list']);

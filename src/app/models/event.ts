@@ -24,10 +24,11 @@ export interface EventMF {
 export interface EventDto {
   id: number;
   name: string;
-  price: number;
+  price?: number;
   startDate: string;
   image: string;
   endDate: string;
   descripcion: string;
   ticketTypeId?: number;
+  ticketTypeName?: string;
 }

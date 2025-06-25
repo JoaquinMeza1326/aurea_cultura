@@ -3,8 +3,17 @@ import { Routes } from '@angular/router';
 import { eventRoutes } from './routes/event.route';
 import { userRoutes } from './routes/user.route';
 import { adminRoutes } from './routes/admin.route';
+import { AdminGuard } from './guards/admin.guard';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
+  {
+    path: 'landing',
+    loadComponent: () =>
+      import('./component/landing/landing.component').then(
+        (m) => m.LandingComponent
+      ),
+  },
   {
     path: 'login',
     loadComponent: () =>
@@ -21,6 +30,7 @@ export const routes: Routes = [
   },
   {
     path: 'home',
+    canActivate: [AuthGuard],
     loadComponent: () =>
       import('./component/cuenta/inicio/inicio.component').then(
         (m) => m.InicioComponent
@@ -28,6 +38,7 @@ export const routes: Routes = [
   },
   {
     path: 'transactions',
+    canActivate: [AuthGuard],
     loadComponent: () =>
       import('./component/cuenta/transacciones/transacciones.component').then(
         (m) => m.TransaccionesComponent
@@ -35,6 +46,7 @@ export const routes: Routes = [
   },
   {
     path: 'interests',
+    canActivate: [AuthGuard],
     loadComponent: () =>
       import('./component/cuenta/intereses/intereses.component').then(
         (m) => m.InteresesComponent
@@ -42,6 +54,7 @@ export const routes: Routes = [
   },
   {
     path: 'tickets',
+    canActivate: [AuthGuard],
     loadComponent: () =>
       import('./component/cuenta/entradas/entradas.component').then(
         (m) => m.EntradasComponent
@@ -49,6 +62,7 @@ export const routes: Routes = [
   },
   {
     path: 'report',
+    canActivate: [AuthGuard],
     loadComponent: () =>
       import('./component/cuenta/reporte/reporte.component').then(
         (m) => m.ReporteComponent
@@ -56,18 +70,21 @@ export const routes: Routes = [
   },
   {
     path: 'admin',
+    canActivate: [AdminGuard, AuthGuard],
     children: adminRoutes,
   },
   {
     path: 'user',
+    canActivate: [AuthGuard],
     children: userRoutes,
   },
   {
     path: 'events',
+    canActivate: [AuthGuard],
     children: eventRoutes,
   },
   {
     path: '**',
-    redirectTo: 'login',
+    redirectTo: 'landing',
   },
 ];
