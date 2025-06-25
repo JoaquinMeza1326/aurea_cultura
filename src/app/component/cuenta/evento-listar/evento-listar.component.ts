@@ -191,10 +191,6 @@ export class EventoListarComponent {
     this.cities = this.removeRepeats(events.map((x) => x.city));
     this.sponsors = this.removeRepeats(events.map((x) => x.sponsor));
     this.expositors = this.removeRepeats(events.map((x) => x.expositor));
-
-    // this.promotors = events.map((x) => x.promoter!);
-    // this.cities = events.map((x) => x.city!);
-    // this.sponsors = events.map((x) => x.sponsor!);
   }
 
   removeRepeats(array: Array<any>) {
