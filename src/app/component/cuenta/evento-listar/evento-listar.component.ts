@@ -15,6 +15,9 @@ import { Promoter } from '../../../models/promoter';
 import { City } from '../../../models/city';
 import { Sponsor } from '../../../models/Sponsor';
 import { FormsModule } from '@angular/forms';
+import { FavoriteService } from '../../../services/favorite.service';
+import { AuthService } from '../../../services/auth.service';
+import { Favorite } from '../../../models/favorite';
 type FilterKey = keyof EventMF;
 
 @Component({
@@ -48,15 +51,21 @@ export class EventoListarComponent {
   promotors: Promoter[] = [];
   cities: City[] = [];
   sponsors: Sponsor[] = [];
+  favorites: Favorite[] = [];
 
   constructor(
     public eventService: EventService,
+    private favoriteService: FavoriteService,
     private snackbar: MatSnackBar,
-    private router: Router
-  ) {}
+    private router: Router,
+    private authService: AuthService
+  ) {
+    this.getFavorites();
+  }
 
   ngOnInit(): void {
     this.getEvents();
+    this.getFavorites();
   }
 
   viewMore() {
@@ -69,6 +78,75 @@ export class EventoListarComponent {
 
   buy(id: number) {
     this.router.navigate(['events/detail', id]);
+  }
+
+  getFavorites() {
+    this.favoriteService
+      .getFavoritesByClient(this.authService.getIdUser())
+      .subscribe({
+        next: (data: Favorite[]) => {
+          this.favorites = data;
+        },
+        error: () => {},
+      });
+  }
+
+  setFavoriteClass(id: number) {
+    if (!this.favorites) this.favorites = [];
+    if (this.favorites.length > 0) {
+      const isFavorite = this.favorites
+        ?.map((x) => x.event.id)
+        .some((x) => x == id);
+      return isFavorite;
+    }
+    return false;
+  }
+
+  setFavorite(id: number) {
+    const eventFavorite = this.favorites.find((x) => x.event.id == id);
+
+    if (!eventFavorite) {
+      this.addFavorite(id);
+    } else {
+      this.deleteFavorite(eventFavorite.id);
+    }
+  }
+
+  deleteFavorite(id: number) {
+    this.favoriteService?.delete(id).subscribe({
+      next: () => {
+        this.getFavorites();
+        this.snackbar.open('Favorito eliminado', 'Cerrar', {
+          duration: 3000,
+        });
+      },
+      error: () => {
+        this.snackbar.open('Error al borrar favorito', 'Cerrar', {
+          duration: 3000,
+        });
+      },
+    });
+  }
+
+  addFavorite(id: number) {
+    this.favoriteService
+      .add({
+        client_id: this.authService.getIdUser(),
+        event_id: id,
+      })
+      .subscribe({
+        next: () => {
+          this.getFavorites();
+          this.snackbar.open('Favorito guardado', 'Cerrar', {
+            duration: 3000,
+          });
+        },
+        error: () => {
+          this.snackbar.open('Error al guardar favorito', 'Cerrar', {
+            duration: 3000,
+          });
+        },
+      });
   }
 
   getEvents() {

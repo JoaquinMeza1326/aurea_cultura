@@ -25,3 +25,12 @@
 .filter-button:hover{
     background-color: #000;
 }
+
+.star{
+  color: #c3c3c3;
+  cursor: pointer;
+}
+
+.star.favorite{
+  color: #692d3d;
+}

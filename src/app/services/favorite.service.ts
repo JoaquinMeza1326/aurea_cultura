@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
-import { Favorite } from '../models/favorite';
+import { CreateFavoriteDto, Favorite } from '../models/favorite';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +24,7 @@ export class FavoriteService {
     return this.http.get<Favorite>(`${this.url}/${id}`);
   }
 
-  add(favorite: Favorite): Observable<Favorite> {
+  add(favorite: CreateFavoriteDto): Observable<Favorite> {
     return this.http.post<Favorite>(`${this.url}/create`, favorite);
   }
 

@@ -14,3 +14,9 @@ export interface FavoriteDto {
   startDate: string;
   endDate: string;
 }
+
+export interface CreateFavoriteDto {
+  id?: number;
+  client_id: number;
+  event_id: number;
+}
